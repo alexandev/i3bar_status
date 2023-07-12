@@ -4,12 +4,22 @@ from methods import cmd
 from colors import COLOR_NORMAL, COLOR_IDLE, COLOR_GOOD, COLOR_WARNING, COLOR_BAD
 
 def block_battery():
-    cmd_return = cmd("upower -i /org/freedesktop/UPower/devices/battery_BAT0")
+    battery = "/org/freedesktop/UPower/devices/battery_BAT0"
+    cmd_return = cmd("upower -i " + battery)
     
-    # find lines that start with text, then split them at the ':' symbol and strip all spaces
-    state = re.search('state:.+', cmd_return).group().split(':')[1].strip()
-    percentage = re.search('percentage:.+', cmd_return).group().split(':')[1].strip()
+    # find line that starts with text, then split it at the ':' symbol and strip all spaces
+    state = re.search('state:.+', cmd_return)
+    if state != None :
+        state = state.group().split(':')[1].strip()
+    else :
+        state = False
 
+    percentage = re.search('percentage:.+', cmd_return)
+    if percentage != None :
+        percentage = percentage.group().split(':')[1].strip()
+    else :
+        percentage = False
+    
     match state :
         case 'fully-charged' :
             return BlockBody(
@@ -56,6 +66,6 @@ def block_battery():
                     )
         case other :
             return BlockBody(
-                full_text = state + " " + percentage,
+                full_text = "battery error",
                 color = COLOR_WARNING
             )

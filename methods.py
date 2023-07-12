@@ -21,8 +21,8 @@ def print_stdout(message: str):
     sys.stdout.flush()
 
 def cmd(cmd_str: str):
-    output = subprocess.run(cmd_str, shell=True, capture_output=True)
-    return output.stdout.decode('UTF-8')
+    output = subprocess.run(cmd_str, shell=True, capture_output=True, text=True)
+    return output.stdout
 
 def print_status(blocks_list: list[BlockBody]):
     print_stdout("[")

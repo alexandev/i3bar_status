@@ -1,0 +1,5 @@
+COLOR_NORMAL = "#ffffff"
+COLOR_IDLE = "#777777"
+COLOR_WARNING = "#ffa500"
+COLOR_GOOD = "#00abff"
+COLOR_BAD = "#ff0000"
